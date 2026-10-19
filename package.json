@@ -1,0 +1,42 @@
+{
+  "name": "gym-coach",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/setup-assets.mjs && next dev",
+    "build": "node scripts/setup-assets.mjs && next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "next typegen && tsc --noEmit",
+    "setup:assets": "node scripts/setup-assets.mjs",
+    "setup:icons": "node scripts/generate-icons.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "^1.1.1",
+    "@serwist/turbopack": "^9.5.13",
+    "next": "16.4.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "server-only": "^0.0.1",
+    "serwist": "^9.5.13",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "esbuild": "^0.28.2",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.2",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vitest": "^5.0.5"
+  },
+  "packageManager": "pnpm@10.18.3",
+  "engines": {
+    "node": ">=20.9"
+  }
+}
