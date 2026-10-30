@@ -27,20 +27,24 @@ interface Options {
 const HUD_INTERVAL_MS = 250;
 const INITIAL_STATS: TrackerStats = { fps: 0, framing: "no-person", delegate: null };
 
-function describeError(error: unknown): string {
+export type CameraError = "denied" | "notFound" | "inUse" | "unsupported" | "generic";
+
+/** Maps a getUserMedia/MediaPipe failure to a code the UI translates. */
+function describeError(error: unknown): CameraError {
   if (error instanceof DOMException) {
     switch (error.name) {
       case "NotAllowedError":
-        return "Camera permission was denied. Allow camera access in your browser settings and try again.";
+        return "denied";
       case "NotFoundError":
-        return "No camera was found on this device.";
+        return "notFound";
       case "NotReadableError":
-        return "The camera is in use by another app.";
+        return "inUse";
       case "OverconstrainedError":
-        return "This camera doesn't support the requested mode.";
+        return "unsupported";
     }
   }
-  return error instanceof Error ? error.message : "Something went wrong starting the camera.";
+  console.error("[camera]", error);
+  return "generic";
 }
 
 /**
@@ -55,7 +59,7 @@ export function usePoseTracker({ enabled, facing, videoRef, canvasRef, onFrame }
     onFrameRef.current = onFrame;
   });
   const [status, setStatus] = useState<TrackerStatus>("idle");
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<CameraError | null>(null);
   const [stats, setStats] = useState<TrackerStats>(INITIAL_STATS);
 
   useEffect(() => {

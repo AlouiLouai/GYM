@@ -23,6 +23,8 @@ export interface SetSummary {
   topFault: { id: string; label: string; count: number } | null;
   /** Needs at least 4 reps to compare halves meaningfully. */
   fatigue: FatigueTrend | null;
+  /** Time held, for timed holds (plank, wall sit). */
+  holdMs?: number;
 }
 
 const mean = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0);

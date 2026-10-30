@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { buildPrompt, SYSTEM_INSTRUCTION } from "@/core/coach/prompt";
+import { buildPrompt, systemInstruction } from "@/core/coach/prompt";
 import { CoachRequestSchema } from "@/core/coach/schema";
 
 // Gemini's free tier is rate-limited and may use prompts to improve Google products,
@@ -164,7 +164,7 @@ export async function POST(request: Request) {
   if (!parsed.success) return reply({ error: "invalid-request" }, 400);
 
   const text = await firstNote(MODELS, apiKey, {
-    systemInstruction: { parts: [{ text: SYSTEM_INSTRUCTION }] },
+    systemInstruction: { parts: [{ text: systemInstruction(parsed.data.lang) }] },
     contents: [{ role: "user", parts: [{ text: buildPrompt(parsed.data) }] }],
   });
   return text ? reply({ text }) : reply({ error: "upstream" }, 502);

@@ -8,12 +8,27 @@ Pose tracking (MediaPipe) runs **on the device**: video is never uploaded.
 
 ## Features
 
-- 12 exercises in four groups: legs & glutes (squat, lunge, deadlift, Romanian deadlift, glute bridge), push (push-up, dip), pull (pull-up, bent-over row, bicep curl) and shoulders (shoulder press, lateral raise).
+- 44 exercises in six groups: legs & glutes (squat, front, goblet and sumo squat, lunge, reverse lunge, Bulgarian split squat, deadlift, sumo and Romanian deadlift, good morning, glute bridge, hip thrust), push (push-up, incline and diamond push-up, bench press, close-grip bench, dip, bench dip, overhead tricep extension, skull crusher), pull (pull-up, chin-up, bent-over, one-arm and inverted row, bicep and hammer curl), shoulders (shoulder press, Arnold press, pike push-up, lateral and front raise, upright row) and core & cardio (sit-up, hanging and lying leg raise, jumping jack, jump squat, kettlebell swing) and timed holds (plank, side plank, wall sit).
+- Timed holds: the clock starts when you are in position, keeps running through a short wobble, ends the set by itself when you drop, calls out every 10 s and coaches sagging hips or sitting too high. Longest hold is a PR.
+- Line-up outline: before the first rep, a ghost of the start position shows where to stand; it turns green when your whole body is in frame.
+- Plate calculator under the weight field: which plates to load per side for the bar you use (20/15/10 kg or 45/35/25 lb).
+- Weekly progress chart in History: sets, reps, volume or hold time for the last 8 weeks, compared with last week.
 - Live skeleton overlay and a "full body in frame" check.
 - Rep counting with partial-rep detection and a 0-100 form score per rep.
 - **Live voice and on-screen cues** the moment a fault is detected (mid-rep), not after the rep.
 - Set summary with fatigue signals and comparison against your previous set (in memory only).
-- Optional AI coach note (Gemini) with an offline/local fallback.
+- **Smart voice coach**: counts reps, corrects a fault once and then only if it comes back, says "Better!" when
+  you fix it, and counts down to a target ("two more", "last one"). Modes: Smart / Everything / Reps only /
+  Beeps / Silent. Picks the best installed voice instead of the robotic default.
+- **English, Standard Arabic and Tunisian Derja** (UI, cues, voice and coach note), with right-to-left layout.
+  Phones don't ship a Tunisian voice, so an Arabic voice reads the Derja cues.
+- Weight and RPE per set, saved history (localStorage, on device), PRs (heaviest, estimated 1RM, most reps,
+  best form), training streak, rest timer and target reps.
+- Shareable set card image (native share sheet, or download).
+- Hands-free sets: the set finishes itself after a few seconds without a rep (with a "Keep going" option),
+  haptic feedback per rep, and the last exercise is reopened next time.
+- Exercise picker with search (English or Arabic names), favorites and recent exercises.
+- Optional AI coach note (Gemini) in the chosen language, with an offline/local fallback.
 - Installable, works offline once the model has been cached.
 
 ## Stack

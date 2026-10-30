@@ -1,4 +1,5 @@
 import { EXERCISES } from "../exercises/definitions";
+import type { Lang } from "../i18n";
 import { faultLabel, type CoachRequest, type SetStats } from "./request";
 
 export const SYSTEM_INSTRUCTION = [
@@ -8,6 +9,15 @@ export const SYSTEM_INSTRUCTION = [
   "Mention one thing that went well, the single most important fix, and one concrete tip for the next set.",
   "If a previous set is given, compare briefly. This is not medical advice; do not diagnose.",
 ].join(" ");
+
+const LANGUAGE_INSTRUCTION: Record<Lang, string> = {
+  en: "Write in English.",
+  ar: "Write in Modern Standard Arabic.",
+  tn: "Write in Tunisian Arabic (Derja) in Arabic script, the casual way Tunisian gym-goers talk; French gym words are fine.",
+};
+
+/** The system instruction for a request, including the language to answer in. */
+export const systemInstruction = (lang: Lang = "en") => `${SYSTEM_INSTRUCTION} ${LANGUAGE_INSTRUCTION[lang]}`;
 
 function describe(label: string, s: SetStats): string {
   const faults = s.faults.length

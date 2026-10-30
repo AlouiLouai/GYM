@@ -1,6 +1,7 @@
 import type { SetSummary } from "../engine/set-summary";
 import type { ExerciseId } from "../engine/types";
 import { EXERCISES } from "../exercises/definitions";
+import type { Lang } from "../i18n";
 
 // Browser-safe half of the coach API contract: plain types and mapping, with no zod.
 // The runtime validator lives in schema.ts and is imported by the server route only,
@@ -24,6 +25,8 @@ export interface CoachRequest {
   exercise: ExerciseId;
   current: SetStats;
   previous: SetStats | null;
+  /** Language the note is written in. Optional so older clients keep working. */
+  lang?: Lang;
 }
 
 /** Every fault id the engine can produce, with its display label. */
@@ -56,10 +59,11 @@ function toStats(s: SetSummary): SetStats {
 }
 
 /** Only numbers and known ids leave the device: no video, no free text. */
-export function toCoachRequest(current: SetSummary, previous: SetSummary | null): CoachRequest {
+export function toCoachRequest(current: SetSummary, previous: SetSummary | null, lang: Lang = "en"): CoachRequest {
   return {
     exercise: current.exercise,
     current: toStats(current),
     previous: previous && toStats(previous),
+    lang,
   };
 }
