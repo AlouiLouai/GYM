@@ -24,10 +24,42 @@ export type ExerciseId =
   | "lateral-raise"
   | "pull-up"
   | "bent-over-row"
-  | "bicep-curl";
+  | "bicep-curl"
+  | "bench-press"
+  | "goblet-squat"
+  | "bulgarian-split-squat"
+  | "hip-thrust"
+  | "front-raise"
+  | "overhead-tricep-extension"
+  | "hammer-curl"
+  | "chin-up"
+  | "sit-up"
+  | "hanging-leg-raise"
+  | "jumping-jack"
+  | "front-squat"
+  | "sumo-squat"
+  | "reverse-lunge"
+  | "jump-squat"
+  | "good-morning"
+  | "sumo-deadlift"
+  | "kettlebell-swing"
+  | "incline-push-up"
+  | "diamond-push-up"
+  | "pike-push-up"
+  | "bench-dip"
+  | "close-grip-bench-press"
+  | "skull-crusher"
+  | "arnold-press"
+  | "upright-row"
+  | "inverted-row"
+  | "one-arm-row"
+  | "lying-leg-raise"
+  | "plank"
+  | "side-plank"
+  | "wall-sit";
 
 /** How exercises are grouped in the picker. */
-export type ExerciseGroup = "Legs & glutes" | "Push" | "Pull" | "Shoulders";
+export type ExerciseGroup = "Legs & glutes" | "Push" | "Pull" | "Shoulders" | "Core & cardio" | "Holds";
 
 /** Which part of the movement is the lowering (eccentric) phase. */
 export type EccentricPhase = "out" | "back";
@@ -120,6 +152,14 @@ export interface ExerciseConfig {
     tooFast: string;
   };
   checks: readonly CheckConfig[];
+  /**
+   * Set for timed holds (plank, wall sit). They are timed by the HoldEngine instead of counted by the
+   * rep engine; `checks` are then judged frame by frame while holding.
+   */
+  hold?: {
+    /** Whether the lifter is in the hold position; null when it can't be measured. */
+    inPosition: (frame: PoseFrame) => boolean | null;
+  };
 }
 
 export interface Fault {

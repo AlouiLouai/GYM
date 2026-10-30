@@ -38,4 +38,5 @@ export const CoachRequestSchema: z.ZodType<CoachRequest> = z.object({
   exercise: z.enum(EXERCISE_IDS),
   current: SetStatsSchema,
   previous: SetStatsSchema.nullable(),
+  lang: z.enum(["en", "ar", "tn"]).optional(),
 });

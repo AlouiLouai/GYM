@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { localCoachNote } from "@/core/coach/local-note";
 import { toCoachRequest } from "@/core/coach/request";
 import type { SetSummary } from "@/core/engine/set-summary";
+import { useI18n } from "@/lib/i18n";
 
 type NoteState = { status: "loading" } | { status: "done"; text: string; source: "ai" | "local" };
 
@@ -13,7 +14,8 @@ type NoteState = { status: "loading" } | { status: "done"; text: string; source:
  * Mount with a `key` per set so state resets for each new summary.
  */
 export function CoachNote({ summary, previous }: { summary: SetSummary; previous: SetSummary | null }) {
-  const request = useMemo(() => toCoachRequest(summary, previous), [summary, previous]);
+  const { lang, t } = useI18n();
+  const request = useMemo(() => toCoachRequest(summary, previous, lang), [summary, previous, lang]);
   const fallback = useMemo(() => localCoachNote(request), [request]);
   const [state, setState] = useState<NoteState>({ status: "loading" });
 
@@ -41,10 +43,10 @@ export function CoachNote({ summary, previous }: { summary: SetSummary; previous
   return (
     <section className="mt-4 rounded-xl bg-zinc-900 p-3" aria-live="polite">
       <p className="mb-1 text-xs text-zinc-500">
-        {state.status === "done" && state.source === "ai" ? "AI coach note" : "Coach note"}
+        {state.status === "done" && state.source === "ai" ? t.ui.aiCoachNote : t.ui.coachNote}
       </p>
       {state.status === "loading" ? (
-        <div className="space-y-2" aria-label="Writing your coach note">
+        <div className="space-y-2" aria-label={t.ui.writingNote}>
           <div className="h-3 w-full animate-pulse rounded bg-zinc-800" />
           <div className="h-3 w-4/5 animate-pulse rounded bg-zinc-800" />
         </div>

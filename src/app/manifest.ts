@@ -15,6 +15,11 @@ export default function manifest(): MetadataRoute.Manifest {
     background_color: "#09090b",
     theme_color: "#09090b",
     categories: ["fitness", "health", "sports"],
+    // Long-press the home-screen icon to jump straight in.
+    shortcuts: [
+      { name: "Start a session", short_name: "Train", url: "/session", icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }] },
+      { name: "History & PRs", short_name: "PRs", url: "/history", icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }] },
+    ],
     icons: [
       { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
       { src: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },

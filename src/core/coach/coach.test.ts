@@ -48,7 +48,7 @@ describe("CoachRequestSchema", () => {
 
   it("rejects out-of-range numbers and unknown exercises", () => {
     expect(CoachRequestSchema.safeParse({ ...valid, current: { ...valid.current, avgScore: 500 } }).success).toBe(false);
-    expect(CoachRequestSchema.safeParse({ ...valid, exercise: "bench-press" }).success).toBe(false);
+    expect(CoachRequestSchema.safeParse({ ...valid, exercise: "underwater-basket-weaving" }).success).toBe(false);
   });
 });
 
@@ -62,6 +62,13 @@ describe("localCoachNote", () => {
   it("compares with the previous set", () => {
     const better = localCoachNote(toCoachRequest(summary([95, 95, 95]), summary([70, 70, 70])));
     expect(better).toMatch(/25 points better/);
+  });
+
+  it("writes in the requested language", () => {
+    const note = localCoachNote(toCoachRequest(summary([70, 70, 70], ["torso-lean"]), null, "tn"));
+    expect(note).toMatch(/سيري باهية/);
+    expect(note).toMatch(/طايح لقدام/);
+    expect(CoachRequestSchema.safeParse(toCoachRequest(summary([90]), null, "ar")).success).toBe(true);
   });
 
   it("handles a set with no counted reps", () => {

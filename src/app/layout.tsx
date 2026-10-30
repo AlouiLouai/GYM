@@ -1,6 +1,8 @@
 import { SerwistProvider } from "@serwist/turbopack/react";
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Noto_Sans_Arabic } from "next/font/google";
+import { DocumentLang } from "@/components/document-lang";
+import { DOCUMENT_LANG_SCRIPT } from "@/lib/document-lang-script";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,11 +15,17 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// Geist has no Arabic glyphs; the browser falls back to this one per character.
+const notoArabic = Noto_Sans_Arabic({
+  variable: "--font-arabic",
+  subsets: ["arabic"],
+});
+
 export const metadata: Metadata = {
   applicationName: "Gym Coach",
   title: { default: "Gym Coach", template: "%s · Gym Coach" },
   description:
-    "AI gym coach: counts your reps and checks your form with your camera, entirely on-device.",
+    "AI gym coach: counts your reps, checks your form and tracks your PRs with your camera, entirely on-device. English, العربية, تونسي.",
   appleWebApp: {
     capable: true,
     title: "Gym Coach",
@@ -39,11 +47,17 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
+    // The inline script may switch lang/dir before hydration, hence suppressHydrationWarning.
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable} ${notoArabic.variable} h-full antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: DOCUMENT_LANG_SCRIPT }} />
+      </head>
       <body className="min-h-full flex flex-col">
+        <DocumentLang />
         <SerwistProvider swUrl="/serwist/sw.js">{children}</SerwistProvider>
       </body>
     </html>

@@ -1,11 +1,13 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { useI18n } from "@/lib/i18n";
 
 const subscribe = () => () => {};
 
 /** iOS can't show an install prompt, so explain "Add to Home Screen" there. */
 export function InstallHint() {
+  const { t } = useI18n();
   const show = useSyncExternalStore(
     subscribe,
     () => {
@@ -21,7 +23,7 @@ export function InstallHint() {
   if (!show) return null;
   return (
     <p className="max-w-xs rounded-xl bg-zinc-900 p-3 text-center text-sm text-zinc-400">
-      Install: tap the Share button, then <strong className="text-zinc-200">Add to Home Screen</strong>.
+      {t.ui.install} <strong className="text-zinc-200">{t.ui.addToHome}</strong>.
     </p>
   );
 }
