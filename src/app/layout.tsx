@@ -1,4 +1,5 @@
 import { SerwistProvider } from "@serwist/turbopack/react";
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Noto_Sans_Arabic } from "next/font/google";
 import { DocumentLang } from "@/components/document-lang";
@@ -59,6 +60,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <DocumentLang />
         <SerwistProvider swUrl="/serwist/sw.js">{children}</SerwistProvider>
+        {/* Page views only (no cookies); camera frames and workout data never leave the device. */}
+        <Analytics />
       </body>
     </html>
   );

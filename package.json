@@ -16,6 +16,7 @@
   "dependencies": {
     "@mediapipe/tasks-vision": "^1.1.1",
     "@serwist/turbopack": "^9.5.13",
+    "@vercel/analytics": "^2.0.1",
     "next": "16.4.2",
     "react": "19.3.1",
     "react-dom": "19.3.1",
@@ -37,6 +38,6 @@
   },
   "packageManager": "pnpm@10.18.3",
   "engines": {
-    "node": ">=20.9"
+    "node": "24.x"
   }
 }
